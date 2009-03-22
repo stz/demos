@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.sfr.com/ecommerce/ws/cartManager/v1_0" 
+    xmlns:tns="http://www.sfr.com/ecommerce/ws/cartManager/v1_0"
+    elementFormDefault="qualified" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+
+    <xsd:simpleType name="ipAddress">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:complexType name="cart">
+        <xsd:sequence>
+            <xsd:element name="salesChannelId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="shelfTelesalesId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="telesalesId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="clientIP" type="tns:ipAddress" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="totalPrice" type="xsd:decimal" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="priceByMonth" type="xsd:decimal" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="promotionCode" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="plans" type="tns:plan" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="accessories" type="tns:article" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="plan">
+        <xsd:sequence>
+            <xsd:element name="offerTypeCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="salePointCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="PTAId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="PTALabel" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="commitmentCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="commitmentLabel" type="xsd:string" minOccurs="1" maxOccurs="1"/>       
+            <xsd:element name="pricePerMonth" type="xsd:decimal" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="SIMType" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="articles" type="tns:article" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="options" type="tns:service" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="benefits" type="tns:service" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="service">
+        <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="label" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="price" type="xsd:decimal" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="selectedByClient" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="displayableToClient" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="necessaryForActivation" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="reductionValue" type="xsd:decimal" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="reductionLabel" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="parameters" minOccurs="0" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>        
+                        <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>    
+    
+    <xsd:complexType name="article">
+        <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="label" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="price" type="xsd:decimal" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="preorder" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="preorderMaxDeliveryDate" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="planArticlePrice" type="xsd:decimal" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="reductionValue" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="reductionLabel" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="sponsorCode" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ODRValue" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ODRLink" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:element name="addCartRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="cart" type="tns:cart" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:element name="addCartResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="transactionId" type="xsd:long" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+        
+    <xsd:element name="cartManagerException">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="code" type="xsd:int" />
+                <xsd:element name="description" type="xsd:string" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

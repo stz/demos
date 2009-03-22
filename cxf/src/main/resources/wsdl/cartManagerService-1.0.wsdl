@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:tns="http://www.sfr.com/ecommerce/ws/cartManager/v1_0"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    name="cartManagerService" 
+    targetNamespace="http://www.sfr.com/ecommerce/ws/cartManager/v1_0">
+    
+   <wsdl:types>
+      <xsd:schema targetNamespace="http://www.sfr.com/ecommerce/ws">
+         <xsd:import schemaLocation="cartManagerService-1.0.xsd" namespace="http://www.sfr.com/ecommerce/ws/cartManager/v1_0" />
+      </xsd:schema>
+   </wsdl:types>
+   
+    <wsdl:message name="cartManagerFaultMsg">
+        <wsdl:part name="fault" element="tns:cartManagerException"/>
+    </wsdl:message>  
+    
+    <wsdl:message name="addCartRequest">
+        <wsdl:part name="input" element="tns:addCartRequest"/>
+    </wsdl:message>
+    
+    <wsdl:message name="addCartResponse">
+        <wsdl:part name="output" element="tns:addCartResponse"/>
+    </wsdl:message>
+    
+    <wsdl:portType name="CartManagerService">
+        <wsdl:operation name="addCart">
+            <wsdl:input message="tns:addCartRequest" />
+            <wsdl:output message="tns:addCartResponse" />
+            <wsdl:fault name="fault" message="tns:cartManagerFaultMsg" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="cartManagerServiceSOAP" type="tns:CartManagerService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="addCart">
+            <soap:operation soapAction="http://www.sfr.com/ws/ecommerce/cartManager/v1_0/addCart" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal" />
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    
+    <wsdl:service name="cartManagerService">
+        <wsdl:port binding="tns:cartManagerServiceSOAP" name="cartManagerServiceSOAP">
+            <soap:address location="http://www.example.org/" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
