@@ -14,24 +14,70 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+           <plugin>
+                <groupId>org.apache.maven.plugins </groupId>
+                <artifactId>maven-surefire-plugin </artifactId>
+                <executions>
+                    <execution>
+                        <id>surefire-itest</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>/**/*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
                 <version>1.0</version>
                 <configuration>
+                    <!-- 
                     <wait>false</wait>
+                    -->
                     <container>
                         <containerId>tomcat6x</containerId>
                         <home>/usr/local/web/tomcat-v6/apache-tomcat-6.0.16</home>
-                        <dependencies>
-                            <dependency>
-                                <groupId>hsqldb</groupId>
-                                <artifactId>hsqldb</artifactId>
-                            </dependency>
-                        </dependencies>
+                        <log>${project.build.directory}/cargo/${containerId}.log</log>
+                        <systemProperties>
+                            <user>devsf</user>
+                        </systemProperties>
                     </container>
                     <configuration>
-                        <home>${project.build.directory}/target/tomcat</home>
+                        <home>${project.build.directory}/tomcat</home>
+                        <properties>
+                            <cargo.datasource.datasource>
+                                cargo.datasource.jndi=jdbc/sfrperso|
+                                cargo.datasource.username=sfrfroa| 
+                                cargo.datasource.password=sfrfroa| 
+                                cargo.datasource.type=javax.sql.DataSource|
+                                cargo.datasource.driver=oracle.jdbc.driver.OracleDriver| 
+                                cargo.datasource.url=jdbc:oracle:thin:@oratest:1521:pswdev1
+                            </cargo.datasource.datasource>
+                        </properties> 
+                        <deployables>
+                            <deployable>
+                                <groupId>com.sfr.psw.authentication</groupId>
+                                <artifactId>sfr-authentication-server</artifactId>
+                                <type>war</type>
+                                <properties>
+                                    <context>cas</context>
+                                </properties>
+                            </deployable>
+                            <deployable>
+                                <groupId>com.sfr.applications.ecommerce.webapps</groupId>
+                                <artifactId>frontoffice</artifactId>
+                                <type>war</type>
+                                <properties>
+                                    <context>frontoffice</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
                     </configuration>
                 </configuration>
                 <executions>
@@ -50,11 +96,22 @@
                         </goals>
                     </execution>
                 </executions>
-                
             </plugin>
         </plugins>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>com.sfr.psw.authentication</groupId>
+            <artifactId>sfr-authentication-server</artifactId>
+            <type>war</type>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sfr.applications.ecommerce.webapps</groupId>
+            <artifactId>frontoffice</artifactId>
+            <type>war</type>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
