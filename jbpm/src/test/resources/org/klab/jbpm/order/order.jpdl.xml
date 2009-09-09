@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="order" version="1" xmlns="http://jbpm.org/4.0/jpdl">
+   <start g="36,31,92,52">
+      <transition to="paiement"/>
+   </start>
+   <state g="16,100,92,52" name="paiement">
+      <transition g="5,-14" to="activation"/>
+   </state>
+   <state g="16,184,92,52" name="activation"/>
+</process>
