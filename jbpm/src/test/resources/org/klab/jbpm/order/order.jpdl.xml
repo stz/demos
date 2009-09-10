@@ -4,8 +4,8 @@
    <start g="36,31,92,52">
       <transition to="paiement"/>
    </start>
-   <state g="16,100,92,52" name="paiement">
-      <transition g="5,-14" to="activation"/>
-   </state>
+   <task g="16,100,92,52" name="paiement" assignee="client">
+      <transition to="activation"/>
+   </task>
    <state g="16,184,92,52" name="activation"/>
 </process>
