@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="noitide" version="1" xmlns="http://jbpm.org/4.0/jpdl">
+   <start g="55,312,92,52">
+      <transition to="edition"/>
+   </start>
+   <state g="159,158,92,52" name="validation">
+      <transition g="164,265:-42,-18" name="rejeter" to="edition"/>
+      <transition g="-51,-14" name="rejeter definitivement" to="end"/>
+      <transition g="312,236:-20,5" name="accepter" to="publier"/>
+   </state>
+   <state g="163,309,92,52" name="edition">
+      <transition g="251,263:-4,15" name="soumettre" to="validation"/>
+   </state>
+   <state g="373,162,92,52" name="publier">
+      <transition g="312,143:-36,-17" name="signaler un abus" to="validation"/>
+   </state>
+   <end g="183,27,48,48" name="end"/>
+</process>
