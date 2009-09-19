@@ -37,6 +37,7 @@
 			<props>
 				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show.sql">true</prop>
 				<!--
 				<prop key="hibernate.query.substitutions">true 'T', false 'F'</prop>
 				-->

@@ -12,17 +12,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "lines")
+public class Line {
 
     @Id
     @GeneratedValue
     private Long id;
-    
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    private Set<Line> lines = new HashSet<Line>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "line_id")
+    private Set<Article> articles = new HashSet<Article>();
+    
     public void setId(Long id) {
         this.id = id;
     }
@@ -31,11 +31,11 @@ public class Order {
         return id;
     }
 
-    public void setLines(Set<Line> lines) {
-        this.lines = lines;
+    public void setArticles(Set<Article> articles) {
+        this.articles = articles;
     }
 
-    public Set<Line> getLines() {
-        return lines;
+    public Set<Article> getArticles() {
+        return articles;
     }
 }

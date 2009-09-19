@@ -47,12 +47,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>3.5.0.Beta-1</version>
+			<version>3.5.0.Beta-1</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
-            <version>3.5.0.Beta-1</version>
+			<version>3.5.0.Beta-1</version>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -63,6 +63,11 @@
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.8.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
 		</dependency>
         <!--
         <dependency>
@@ -93,6 +98,11 @@
 		--> 
 
 		<!-- log4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.4.2</version>
+		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
