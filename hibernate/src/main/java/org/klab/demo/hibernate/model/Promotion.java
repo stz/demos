@@ -1,7 +1,5 @@
 package org.klab.demo.hibernate.model;
 
-import java.awt.print.Book;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,8 +23,10 @@ public class Promotion {
     private Long id;
     
     @Any(metaColumn = @Column(name = "ITEM_TYPE"))
-    @AnyMetaDef(idType = "long", metaType = "string", metaValues = { @MetaValue(targetEntity = Book.class, value = "B"),
-            @MetaValue(targetEntity = VHS.class, value = "V"), @MetaValue(targetEntity = DVD.class, value = "D") })
+    @AnyMetaDef(idType = "long", metaType = "string", metaValues = {
+            @MetaValue(targetEntity = Line.class, value = "LINE"),
+            @MetaValue(targetEntity = Article.class, value = "ARTICLE")
+    })
     @JoinColumn(name = "ITEM_ID")
     private Object item;
     
