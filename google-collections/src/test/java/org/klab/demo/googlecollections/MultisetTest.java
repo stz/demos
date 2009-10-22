@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.TreeMultiset;
 
-public class MultisetsTest {
+public class MultisetTest {
 
 	@Test
 	public void test1() {
