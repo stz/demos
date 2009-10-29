@@ -12,7 +12,7 @@ public class QueueSender {
 	
     public void send(String msg) {
     	for (int i = 0; i < 100; i++) {
-    		jmsTemplate.convertAndSend("Queue.Name", msg);
+    		jmsTemplate.convertAndSend("Queue.Name", msg + " " + i);
 		}
     }
 }

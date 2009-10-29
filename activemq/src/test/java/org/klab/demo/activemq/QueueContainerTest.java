@@ -18,5 +18,6 @@ public class QueueContainerTest {
 	@Test
 	public void testSend() {
 		queueSender.send("coucou");
+		ThreadUtils.pause(1000);
 	}
 }

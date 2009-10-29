@@ -11,7 +11,7 @@ public class QueueListener implements MessageListener {
 
     public void onMessage(Message message) {
         if (message instanceof TextMessage) {
-        	pause();
+        	ThreadUtils.pause(100);
             try {
                 System.out.println(((TextMessage) message).getText());
             }
@@ -23,12 +23,4 @@ public class QueueListener implements MessageListener {
             throw new IllegalArgumentException("Message must be of type TextMessage");
         }
     }
-    
-	private void pause() {
-		try {
-			Thread.currentThread().sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
 }
