@@ -10,13 +10,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = {
     "/activemq-applicationContext.xml"
 })
-public class JmsQueueSenderTest {
+public class QueueContainerTest {
 
 	@Autowired
-	private JmsQueueSender jmsQueueSender;
+	private QueueSender queueSender;
 	
 	@Test
-	public void test() {
-		jmsQueueSender.simpleSend();
+	public void testSend() {
+		queueSender.send("coucou");
 	}
 }
