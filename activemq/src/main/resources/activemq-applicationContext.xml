@@ -15,8 +15,15 @@
     <!-- scans for annotated classes in the org.klab.demo.activemq package -->
 	<context:component-scan base-package="org.klab.demo.activemq"/>
 	
+    <!-- creates an in memory amq broker -->
+    <amq:broker useJmx="false" persistent="false">
+       <amq:transportConnectors>
+           <amq:transportConnector uri="vm://localhost"/>
+       </amq:transportConnectors>
+    </amq:broker>
+    
 	<!-- creates an activemq connection factory using the amq namespace -->
-	<amq:connectionFactory id="amqConnectionFactory" brokerURL="tcp://localhost:61616" />
+	<amq:connectionFactory id="amqConnectionFactory" brokerURL="vm://localhost" />
 	      
 	<!-- CachingConnectionFactory Definition, sessionCacheSize property is the number of sessions to cache -->
 	<bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
