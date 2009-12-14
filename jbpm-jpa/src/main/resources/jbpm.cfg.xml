@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jbpm-configuration>
+
+	<import resource="jbpm.jpdl.cfg.xml" />
+	<import resource="jbpm.identity.cfg.xml" />
+	<!-- <import resource="jbpm.jobexecutor.cfg.xml" />-->
+
+	<process-engine-context>
+		<repository-service />
+		<repository-cache />
+		<execution-service />
+		<history-service />
+		<management-service />
+		<identity-service />
+		<task-service />
+
+		<!-- Here we needed to change the transaction interceptor -->
+		<command-service name="txRequiredCommandService">
+			<retry-interceptor />
+			<environment-interceptor />
+			<spring-transaction-interceptor useCurrent="false"/>
+		</command-service>
+
+		<object class="org.jbpm.pvm.internal.id.DatabaseDbidGenerator">
+			<field name="commandService">
+				<ref object="txRequiredCommandService" />
+			</field>
+		</object>
+
+		<object class="org.jbpm.pvm.internal.id.DatabaseIdComposer"
+			init="eager" />
+
+		<id-generator />
+		<types resource="jbpm.variable.types.xml" />
+		<address-resolver />
+		<business-calendar />
+
+	</process-engine-context>
+
+	<transaction-context>
+		<repository-session />
+		<db-session />
+		<message-session />
+		<timer-session />
+		<history-session />
+		<mail-session>
+			<mail-server>
+				<session-properties resource="jbpm.mail.properties" />
+			</mail-server>
+		</mail-session>
+		<!--
+			Need to set explicitly that we don't want jbpm to create sessions
+		-->
+		<hibernate-session current="true" />
+	</transaction-context>
+</jbpm-configuration>
