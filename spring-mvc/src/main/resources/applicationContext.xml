@@ -12,14 +12,5 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.xsd">
 
-	<security:http auto-config='true'>
-		<security:intercept-url pattern="/**" access="ROLE_USER" />
-	</security:http>
-
-	<security:authentication-provider>
-		<security:user-service>
-			<security:user name="stz" password="stz" authorities="ROLE_USER" />
-		</security:user-service>
-	</security:authentication-provider>
 
 </beans>
