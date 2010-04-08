@@ -1,0 +1,51 @@
+package org.klab.demos.drools
+ 
+import org.klab.demos.drools.Vote;
+ 
+rule "WrongValue - less than 0"
+     when
+          m : Vote( average < 0.0, vote : vote )
+     then          
+          m.setAverage(0.0f);
+          update( m );               
+end
+ 
+rule "WrongValue - bigger than 10"
+     when
+          m : Vote( average > 10.0, vote : vote )
+     then          
+          m.setAverage(10.0f);
+          update( m );               
+end
+ 
+rule "BadValue - between 0-3"
+     when
+          m : Vote( average >= 0.0 && average <=3.0, vote : vote )
+     then
+          m.setVote("Bad!");
+          System.out.println( m.getVote() );
+end
+ 
+rule "GoodValue - between 3-6"
+     when
+          m : Vote( average >3.0 && average <=6.0, vote : vote )
+     then
+          m.setVote("Good!");
+          System.out.println( m.getVote() );
+end
+ 
+rule "VeryGoodValue - between 6-9"
+     when
+          m : Vote( average >6.0 && average <=9.0, vote : vote )
+     then
+          m.setVote("Very Good!");
+          System.out.println( m.getVote() );
+end
+ 
+rule "ExcellentValue - between 9-10"
+     when
+          m : Vote( average >9.0 && average <=10.0, vote : vote )
+     then
+          m.setVote("Excellent!");
+          System.out.println( m.getVote() );
+end
