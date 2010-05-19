@@ -15,7 +15,7 @@ public class Main {
 		final Map<String, String> initParams = new HashMap<String, String>();
 
 		initParams.put("com.sun.jersey.config.property.packages",
-				"com.sun.jersey.samples.helloworld.resources");
+				"org.klab.demos.jaxrs");
 
 		System.out.println("Starting grizzly...");
 		SelectorThread threadSelector = GrizzlyWebContainerFactory.create(
