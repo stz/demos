@@ -1,7 +1,7 @@
 package org.klab.geocoding.service.impl;
 
 public enum GoogleStatusCode {
-	G_GEO_SUCCESS ( "No errors occurred; the address was successfully parsed and its geocode was returned."), 
+	G_GEO_SUCCESS ("No errors occurred; the address was successfully parsed and its geocode was returned."), 
 	G_GEO_SERVER_ERROR ("A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is unknown."),  
 	G_GEO_MISSING_QUERY ("An empty address was specified in the HTTP q parameter."),  
 	G_GEO_UNKNOWN_ADDRESS ("No corresponding geographic location could be found for the specified address, possibly because the address is relatively new, or because it may be incorrect."),  
