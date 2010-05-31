@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL MAP 2.0//EN" 
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="trading">
+
+    <typeAlias alias="trade" type="com.developersBook.iBatis.domain.Trade"/> 
+    <cacheModel id="tradeCache" type="LRU" readOnly="true">
+        <flushInterval hours="24"/>
+        <flushOnExecute statement="trading.executeTrade"/>
+        <property name="cache-size" value="1000"/>
+    </cacheModel>
+
+
+    <resultMap id="tradeResult" class="trade">
+        <result property="tradeId" column="TRADE_ID"/>     
+        <result property="action"  column="SIDE"/>
+        <result property="symbol"  column="SYMBOL"/>
+        <result property="shares"  column="SHARES"/>
+        <result property="price"   column="PRICE"/>	   
+        <result property="state"   column="STATE"/>	   
+    </resultMap>
+
+    <select id="getTrade" parameterClass="long" resultMap="tradeResult" 
+	    cacheModel="tradeCache">
+        SELECT 
+               TRADE_ID,				  
+               SIDE,					  
+               SYMBOL,				
+               SHARES,					 
+               PRICE,					  
+               STATE					  
+        FROM 
+              TRADE 
+        WHERE 
+              TRADE_ID = #id#
+    </select>
+
+<!-- Use Trade object (JavaBean) "id" properties as parameters for update. Each of the
+        parameters in the #hash# symbols is a JavaBeans property. -->
+    <update id="executeTrade" parameterClass="long">
+        UPDATE 
+              TRADE 					 
+        SET 						 
+              STATE = 'EXECUTED' 			 	 
+        WHERE 						 
+              TRADE_ID = #id#				 
+    </update>						 
+
+</sqlMap>
