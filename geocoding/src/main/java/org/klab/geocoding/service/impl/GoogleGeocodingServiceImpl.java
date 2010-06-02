@@ -1,6 +1,9 @@
 package org.klab.geocoding.service.impl;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -37,7 +40,7 @@ public class GoogleGeocodingServiceImpl implements GeocodingService {
         
         String response;
         try {
-            response = method.getResponseBodyAsString();
+            response = inputStreamAsString(method.getResponseBodyAsStream());
         } catch (IOException e) {
             throw new GeocodingServiceException("Error while getting query response : " + queryString, e);
         }
@@ -76,6 +79,19 @@ public class GoogleGeocodingServiceImpl implements GeocodingService {
         } catch (URIException e) {
             throw new GeocodingServiceException("Error while encoding url query : " + buffer.toString(), e);
         }
+    }
+    
+    public static String inputStreamAsString(InputStream stream) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        
+        while ((line = br.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        
+        br.close();
+        return sb.toString();
     }
     
     public void setGoogleKey(String googleKey) {
