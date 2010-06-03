@@ -19,8 +19,6 @@ public class GoogleGeocodingServiceImpl implements GeocodingService {
     
     private static final String SERVICE_URL = "http://maps.google.com/maps/geo";
     
-    private String googleKey;
-    
     @Override
     public Coordinates geocode(String address) throws GeocodingServiceException {
         
@@ -70,8 +68,6 @@ public class GoogleGeocodingServiceImpl implements GeocodingService {
         StringBuffer buffer = new StringBuffer();
         buffer.append("q=");
         buffer.append(address);
-        buffer.append("&key=");
-        buffer.append(googleKey);
         buffer.append("&sensor=false&output=csv");
         
         try {
@@ -92,13 +88,5 @@ public class GoogleGeocodingServiceImpl implements GeocodingService {
         
         br.close();
         return sb.toString();
-    }
-    
-    public void setGoogleKey(String googleKey) {
-        this.googleKey = googleKey;
-    }
-    
-    public String getGoogleKey() {
-        return googleKey;
     }
 }
