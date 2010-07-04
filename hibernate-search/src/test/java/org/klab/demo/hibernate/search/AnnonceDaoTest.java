@@ -5,12 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.fr.FrenchAnalyzer;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.Version;
 import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,18 +42,22 @@ public class AnnonceDaoTest  {
         annonceDao.save(new Annonce("Vello femme, à voir"));
         annonceDao.save(new Annonce("Casserole pour faire la cuisine"));
         
-        System.out.println(annonceDao.findById(1L));
+        // Définition de l'analyseur
+        FrenchAnalyzer analyser = new FrenchAnalyzer(Version.LUCENE_29);
+        QueryParser parser = new QueryParser(Version.LUCENE_29, "texte", analyser);
         
-        //Définition de l'analyseur
-        QueryParser parser = new QueryParser(Version.LUCENE_29, "texte", new StandardAnalyzer(Version.LUCENE_29));
-        
-        //Définition du critère de recherche
-        Query query = parser.parse("Velo");
+        // Définition du critère de recherche
+        Query query = parser.parse("velo~");
             
-        //création du fullTextEntityManager  
+        // Création du fullTextEntityManager  
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);  
 
-        List list = fullTextEntityManager.createFullTextQuery(query, Annonce.class).getResultList();
-        System.out.println(list);
+        FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, Annonce.class);
+        fullTextQuery.setProjection(FullTextQuery.SCORE, FullTextQuery.THIS);
+        List<Object[]> result = fullTextQuery.getResultList();
+        for (Object[] array : result) {
+            Annonce annonce = (Annonce) array[1];
+            System.out.println(array[0] + ", " + annonce.getTexte() + "(" + annonce.getId() + ")");
+        }
     }
 }
