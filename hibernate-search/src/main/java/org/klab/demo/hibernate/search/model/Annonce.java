@@ -5,7 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+
 @Entity
+@Indexed
 public class Annonce {
 
     @Id
@@ -13,6 +18,7 @@ public class Annonce {
     private Long id;
     
     @Lob
+    @Field(index = Index.TOKENIZED)
     private String texte;
     
     public Annonce() {

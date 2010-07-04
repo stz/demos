@@ -82,18 +82,18 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
 			<version>${hibernate.version}</version>
-		</dependency>        
-<!--		<dependency>-->
-<!--            <groupId>org.hibernate.javax.persistence</groupId>-->
-<!--            <artifactId>hibernate-jpa-2.0-api</artifactId>-->
-<!--            <version>1.0.0.Final</version>-->
-<!--        </dependency>-->
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search</artifactId>
+			<version>3.2.0.Final</version>
+		</dependency>
 
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.10</version>
+			<version>1.5.8</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
