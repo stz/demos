@@ -22,4 +22,9 @@ public class AnnonceDaoImpl implements AnnonceDao {
             return entityManager.merge(annonce);
         }
     }
+
+    @Override
+    public Annonce findById(Long id) {
+        return entityManager.find(Annonce.class, id);
+    }
 }
