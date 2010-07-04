@@ -11,13 +11,10 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
 
-<!--	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
-<!--		<property name="location" value="classpath:hibernate.properties" />-->
-<!--	</bean>-->
-	
 	<context:property-placeholder location="classpath:hibernate.properties" />
 	
     <context:annotation-config/>
+    <context:component-scan base-package="org.klab.demo.hibernate.search"/>
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName">
@@ -33,46 +30,25 @@
 			<value>${jdbc.password}</value>
 		</property>
 	</bean>
-
-	<!-- Database Property -->
-	<bean id="hibernateProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		<property name="properties">
+    
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="persistence_unit" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-				<prop key="hibernate.show.sql">true</prop>
-				<!--
-				<prop key="hibernate.query.substitutions">true 'T', false 'F'</prop>
-				-->
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
 			</props>
 		</property>
 	</bean>
-
-	<!-- Hibernate SessionFactory -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="hibernateProperties" ref="hibernateProperties" />
-		<property name="packagesToScan" value="org.klab.demo.hibernate.model"/>
-    </bean>
         
     <!-- Transaction Manager -->
-	<!--
-    -->
-    <tx:annotation-driven/>
-	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
+    <tx:annotation-driven transaction-manager="txManager"/>
+	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	
-	<!-- DAOs -->
-	<bean id="annonceDao" class="org.klab.demo.hibernate.search.dao.impl.AnnonceDaoImpl" />
-	<!--
-	<bean id="transactionDao" class="org.klab.mesvelos.dao.impl.TransactionDaoImpl" />
-	-->
-	
-	<!-- Services -->
-	<!--
-	<bean id="veloService" class="org.klab.mesvelos.service.impl.VeloServiceImpl" />
-	<bean id="transactionService" class="org.klab.mesvelos.service.impl.TransactionServiceImpl" />
-	-->
 	
 </beans>
