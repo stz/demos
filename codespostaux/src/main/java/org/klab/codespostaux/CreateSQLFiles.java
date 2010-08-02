@@ -13,13 +13,13 @@ import java.util.TreeSet;
  * Crée les fichiers postalcodes.sql et cities.sql à partir du fichier codes_postaux_liste.txt.
  */
 public class CreateSQLFiles {
-    
+
     public static void main(String[] args) throws Exception {
         
         Set<String> cps = new TreeSet<String>();
         
         // Read File Line By Line
-        BufferedReader in = new BufferedReader(new FileReader("src/main/resources/codes_postaux_liste.txt"));
+        BufferedReader in = new BufferedReader(new FileReader(Files.CODES_POSTAUX_FILENAME));
         String line;
         while ((line = in.readLine()) != null) {
             String cp = line.substring(0, 5);
@@ -32,7 +32,7 @@ public class CreateSQLFiles {
         }
         
 
-        BufferedWriter out1 = new BufferedWriter(new FileWriter("src/main/resources/postalcodes.sql"));
+        BufferedWriter out1 = new BufferedWriter(new FileWriter("target/postalcodes.sql"));
         
         int i = 1;
         Map<String, String> cp2id = new HashMap<String, String>();
@@ -44,10 +44,10 @@ public class CreateSQLFiles {
         out1.close();
 
 
-        BufferedWriter out2 = new BufferedWriter(new FileWriter("src/main/resources/cities.sql"));
+        BufferedWriter out2 = new BufferedWriter(new FileWriter("target/cities.sql"));
         
         // Read File Line By Line
-        in = new BufferedReader(new FileReader("dumps/codes_postaux_liste.txt"));
+        in = new BufferedReader(new FileReader(Files.CODES_POSTAUX_FILENAME));
         while ((line = in.readLine()) != null) {
             String cp = line.substring(0, 5);
             try {
