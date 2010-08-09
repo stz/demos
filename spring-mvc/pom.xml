@@ -23,5 +23,10 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>3.0.3.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>0.9.24</version>
+		</dependency>
 	</dependencies>
 </project>
