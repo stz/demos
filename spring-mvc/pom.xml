@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.klab.demo</groupId>
 	<artifactId>spring-mvc</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>Demo Spring MVC</name>
 	<build>
@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>3.0.0.RELEASE</version>
+			<version>3.0.3.RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>
