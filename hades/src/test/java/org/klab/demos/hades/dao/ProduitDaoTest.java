@@ -15,20 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 })
 @Transactional
 public class ProduitDaoTest extends AbstractJpaTests {
-	
-	@Autowired
-	private ProduitDao produitDao;
-	
-	@Test
-	public void test() {
-		String nom = "p1";
-		
-		Produit p = new Produit();
-		p.setNom(nom);
-		p = produitDao.save(p);
-
-		assertNotNull(p.getId());
-		assertNotNull(produitDao.findByNom(nom));
-		assertEquals(nom, produitDao.findByNom(nom).getNom());
-	}
+    
+    @Autowired
+    private ProduitDao produitDao;
+    
+    @Test
+    public void test() {
+        String nom = "p1";
+        
+        Produit p = new Produit();
+        p.setNom(nom);
+        p = produitDao.save(p);
+        
+        assertNotNull(p.getId());
+        assertNotNull(produitDao.findByNom(nom));
+        assertEquals(nom, produitDao.findByNom(nom).getNom());
+    }
 }
