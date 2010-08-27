@@ -47,7 +47,7 @@ public class AnnonceDaoTest  {
         QueryParser parser = new QueryParser(Version.LUCENE_29, "texte", analyser);
         
         // Définition du critère de recherche
-        Query query = parser.parse("velo~");
+        Query query = parser.parse("vélo~ colnago~");
             
         // Création du fullTextEntityManager  
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);  
