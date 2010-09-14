@@ -3,9 +3,12 @@ package org.klab.deoms.couchdb;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Date;
 
+import org.apache.commons.io.FileUtils;
 import org.jcouchdb.db.Database;
+import org.jcouchdb.document.Attachment;
+import org.jcouchdb.document.ValueRow;
+import org.jcouchdb.document.ViewResult;
 import org.jcouchdb.util.CouchDBUpdater;
 import org.junit.Test;
 import org.klab.demos.couchdb.Order;
@@ -13,14 +16,15 @@ import org.klab.demos.couchdb.Order;
 public class CouchDBTest {
     
     @Test
-    public void createDocumentTest() {
+    public void createDocumentTest() throws IOException {
         
-        // create a database object pointing to the database "mycouchdb" on the local host    
         Database db = new Database("localhost", "hello-world");
 
         Order order = new Order();
-        order.setCreationDate(new Date());
-        order.setPrice(new BigDecimal(100));
+        order.setPrice(new BigDecimal(200));
+        
+        Attachment attachment = new Attachment("", FileUtils.readFileToByteArray(new File("src/main/resources/img.jpg")));
+        order.addAttachment("image", attachment);
 
         // create the document in couchdb
         db.createDocument(order);
@@ -29,7 +33,6 @@ public class CouchDBTest {
     @Test
     public void viewResultTest() throws IOException {
         
-        // create a database object pointing to the database "mycouchdb" on the local host    
         Database db = new Database("localhost", "hello-world");
         
         CouchDBUpdater updater = new CouchDBUpdater();
@@ -37,6 +40,9 @@ public class CouchDBTest {
         updater.setDesignDocumentDir(new File("src/main/resources/views"));
         updater.updateDesignDocuments();
 
-//        ViewResult<Map> result = db.queryView("myDesignDocId/myViewId", Map.class, null, null);
+        ViewResult<Order> result = db.queryView("demos/orders", Order.class, null, null);
+        for (ValueRow<Order> vr : result.getRows()) {
+            System.out.println(vr.getKey() + " : " + vr.getValue().getPrice());
+        }
     }
 }

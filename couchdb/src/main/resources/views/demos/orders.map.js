@@ -1,5 +1,5 @@
 function(doc) { 
-   if (doc.doc_type == "Order") {
+   if (doc.type == "Order") {
 	   emit(doc._id, doc);
    }
 }
